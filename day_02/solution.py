@@ -8,33 +8,20 @@ ldw_map = {
     'B': "ZYX",
     'C': "XZY"
 }
-shape_score = {
-    'X': 1,
-    'Y': 2,
-    'Z': 3
-}
-
-wdl_index_map = {
-    'X': 2,
-    'Y': 1,
-    'Z': 0
-}
-
-outcome_map = {
-    'X': 0,
-    'Y': 3,
-    'Z': 6
+# your choice to [shape score, p2 w/l/d indexes, p2 outcome score]
+super_map = {
+    'X': [1, 2, 0],
+    'Y': [2, 1, 3],
+    'Z': [3, 0, 6]
 }
 wdl_score = [6, 3, 0]
-
 score1 = 0
 score2 = 0
-for l, r in f:
-    score1 += wdl_score[ldw_map[l].index(r)] + shape_score[r]
-    score2 += shape_score[ldw_map[l][wdl_index_map[r]]] + outcome_map[r]
+for l,r in f:
+    score1 += wdl_score[ldw_map[l].index(r)] + super_map[r][0]
+    score2 += super_map[ldw_map[l][super_map[r][1]]][0] + super_map[r][2]
 print(score1)
 print(score2)
-
 
 # # Initial Solution:
 # score = 0
