@@ -14,7 +14,7 @@ shape_score = {
     'Z': 3
 }
 
-wld_index_map = {
+wdl_index_map = {
     'X': 2,
     'Y': 1,
     'Z': 0
@@ -25,13 +25,13 @@ outcome_map = {
     'Y': 3,
     'Z': 6
 }
-wld_score = [6, 3, 0]
+wdl_score = [6, 3, 0]
 
 score1 = 0
 score2 = 0
 for l, r in f:
-    score1 += wld_score[ldw_map[l].index(r)] + shape_score[r]
-    score2 += shape_score[ldw_map[l][wld_index_map[r]]] + outcome_map[r]
+    score1 += wdl_score[ldw_map[l].index(r)] + shape_score[r]
+    score2 += shape_score[ldw_map[l][wdl_index_map[r]]] + outcome_map[r]
 print(score1)
 print(score2)
 
