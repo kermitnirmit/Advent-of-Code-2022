@@ -5,14 +5,8 @@ vals = "." + string.ascii_lowercase + string.ascii_uppercase
 
 score = 0
 for line in f:
-    qwe = line[:len(line)//2], line[len(line)//2:]
-    print(qwe)
-    l = qwe[0]
-    r = qwe[1]
-    l = set(l)
-    r = set(r)
+    l, r = set(line[:len(line)//2]), set(line[len(line)//2:])
     i = list(l.intersection(r))[0]
-    print(i, vals.index(i))
     score += (vals.index(list(l.intersection(r))[0]))
 print(score)
 
