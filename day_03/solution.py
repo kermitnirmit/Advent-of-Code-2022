@@ -7,7 +7,7 @@ score = 0
 for line in f:
     l, r = set(line[:len(line)//2]), set(line[len(line)//2:])
     i = list(l.intersection(r))[0]
-    score += (vals.index(list(l.intersection(r))[0]))
+    score += (vals.index(i))
 print(score)
 
 score = 0
