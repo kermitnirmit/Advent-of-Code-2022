@@ -5,11 +5,9 @@ insts = []
 imps = [20, 60, 100, 140, 180, 220]
 v = 0
 for line in f:
-    if line == "noop":
-        insts.append(line)
-    else:
+    if line != "noop":
         insts.append("noop")
-        insts.append(line)
+    insts.append(line)
 
 s = ""
 p2 = []
