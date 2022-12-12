@@ -15,8 +15,10 @@ def getHeight(x,y):
 
 def bfs(start, goal):
     seen = set()
-    queue = [(start, 0)]
-    seen.add(start)
+    queue = []
+    for s in start:
+        queue.append((s, 0))
+        seen.add(s)
     while queue:
         (point, length) = queue.pop(0)
         x,y = point
@@ -31,7 +33,7 @@ def bfs(start, goal):
 
 
 def solvep1():
-    start = (20,0)
+    start = [(20,0)]
     return bfs(start, end)
 
 
@@ -41,7 +43,7 @@ def solvep2():
         for j in range(len(f[0])):
             if f[i][j] in "Sa":
                 all_as.append((i, j))
-    return min(list(filter(lambda x: x is not None, [bfs(start, end) for start in all_as])))
+    return bfs(all_as, end)
 
 
 print(solvep1())
