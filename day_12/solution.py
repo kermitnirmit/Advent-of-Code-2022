@@ -32,19 +32,13 @@ def bfs(start, goal):
                 queue.append(((nx,ny), length + 1))
 
 
-def solvep1():
-    start = [(20,0)]
-    return bfs(start, end)
-
-
-def solvep2():
-    all_as = []
+def solve(t="S"):
+    starts = []
     for i in range(len(f)):
         for j in range(len(f[0])):
-            if f[i][j] in "Sa":
-                all_as.append((i, j))
-    return bfs(all_as, end)
+            if f[i][j] in t:
+                starts.append((i,j))
+    return bfs(starts, end)
 
-
-print(solvep1())
-print(solvep2())
+print(solve("S"))
+print(solve("Sa"))

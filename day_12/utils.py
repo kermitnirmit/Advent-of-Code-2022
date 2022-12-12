@@ -158,6 +158,9 @@ dmap = {
 }
 neighbors_2d = [(x, y) for y in range(-1, 2) for x in range(-1, 2)  if (x, y) != (0, 0)]
 
+def find_neighbors_2d_8(x,y):
+    [(x + dx, y + dy) for dy in range(-1, 2) for dx in range(-1, 2) if (dx, dy) != (0, 0)]
+
 neighbors_3d = [(x, y, z) for z in range(-1, 2) for y in range(-1, 2) for x in range(-1, 2) if (x, y, z) != (0, 0, 0)]
 
 neighbors_4d = [(x, y, z, w) for w in range(-1, 2) for z in range(-1, 2) for y in range(-1, 2) for x in range(-1, 2) if
