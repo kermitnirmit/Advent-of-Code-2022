@@ -1,5 +1,6 @@
 import functools
 import ast
+from math import prod
 
 f = open("input.txt").read().strip().split("\n\n")
 
@@ -46,7 +47,6 @@ for i, pair in enumerate(f):
         valid += (i + 1)
 all_lines.append([[2]])
 all_lines.append([[6]])
-
 al = sorted(all_lines, key=functools.cmp_to_key(customComp))
 print(valid)
-print((al.index([[2]]) + 1) * (al.index([[6]]) + 1))
+print(prod(i for i, line in enumerate(al, 1) if line in [[[2]], [[6]]]))
