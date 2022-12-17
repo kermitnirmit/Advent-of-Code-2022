@@ -1,3 +1,5 @@
+import time
+
 from tqdm import trange
 from collections import defaultdict, Counter
 
@@ -119,11 +121,14 @@ def solve(iter=2022):
                 diffs[r - l] += 1
     return c + 1, placed, max(diffs, key=diffs.get), heights
 
-
+t1 = time.time()
 (p1, placed, diff, heights) = solve(2022)
 print("p1", p1)
 start = 156
 cycle = diff
 baseline = heights[start]
 per_cycle = heights[start + cycle] - baseline
-print("p2", baseline + (per_cycle * ((1000000000000 - start) // cycle)) + (heights[start + ((1000000000000 - start) % cycle)] - baseline) - 1)
+times, remainder = divmod((1000000000000 - start), cycle)
+print("p2", baseline + (per_cycle * times + (heights[start + remainder] - baseline) - 1))
+t2 = time.time()
+print("runtime:", t2 - t1)
