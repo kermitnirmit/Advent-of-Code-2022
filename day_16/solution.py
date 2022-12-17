@@ -82,6 +82,20 @@ for r1 in d.keys():
 #     recurse("AA", (), 0, 1)
 #     print(asdf)
 # solve()
+
+
+nonzeros = []
+for k,v in d.items():
+    if v != 0:
+        nonzeros.append(k)
+
+print(len(nonzeros))
+
+
+
+subsets =
+
+
 maxTime = 30
 m = 0
 @functools.lru_cache(maxsize=None)
@@ -101,9 +115,9 @@ def recurse(cur, opened, time):
             best = max(best, recurse(n, opened, time + distance))
     return best
 before = time.time()
-p1 = recurse("AA", (), 0)
+# p1 = recurse("AA", (), 0)
 after = time.time()
-print("p1", p1, "time: ", after-before)
+# print("p1", p1, "time: ", after-before)
 
 maxTime = 26
 @functools.lru_cache(maxsize=None)
@@ -123,9 +137,9 @@ def recurse2(cur, opened, time):
             best = max(best, recurse2(n, opened, time + distance))
     return best
 before = time.time()
-p2 = recurse2("AA", (), 0)
+# p2 = recurse2("AA", (), 0)
 after = time.time()
-print("p2", p2, "time: ", after-before)
+# print("p2", p2, "time: ", after-before)
 
 # leaving my failures here :D
 
