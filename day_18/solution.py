@@ -1,11 +1,6 @@
-import time
-
-from tqdm import trange
-from  utils import ints, neighbors_3d, _neighbors_3d
-from collections import defaultdict, Counter
+from  utils import ints, _neighbors_3d
 
 f = [x for x in open("input.txt").read().strip().split("\n")]
-# f = [x for x in open("test.txt").read().strip().split("\n")]
 
 
 points = set()
