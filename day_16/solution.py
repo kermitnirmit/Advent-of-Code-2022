@@ -93,7 +93,7 @@ print(len(nonzeros))
 
 
 
-subsets =
+# subsets =
 
 
 maxTime = 30
