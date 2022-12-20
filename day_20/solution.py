@@ -1,25 +1,16 @@
-import functools
-import time
-
-from utils import ints, _neighbors_3d, floats
-from operator import itemgetter
-from collections import defaultdict, Counter, deque
-
-d = {}
-f = [int(x) for x in open("input.txt").read().strip().split("\n")]
-
-
 def solve(part=1):
     f = [int(x) * (811589153 if part == 2 else 1) for x in open("input.txt").read().strip().split("\n")]
     z_blah = None
     og = []
+    store = list(enumerate(f))
     for i, line in enumerate(f):
         if line == 0:
             z_blah = (i, line)
         og.append((i, line))
 
     def move(nums, i):
-        p, val = [(pos, v) for pos, v in enumerate(nums) if v[0] == i][0]
+        p = nums.index(store[i])
+        val = nums[p]
         nums.pop(p)  # remove it
         nums.insert((p + val[1]) % len(nums), val)  # insert it where it belongs
         return nums
@@ -32,6 +23,7 @@ def solve(part=1):
 solve(1)
 solve(2)
 
+# Leaving this almost working circular DLL system that doesn't work
 # class Node:
 #     def __init__(self, prev, next, val):
 #         self.prev = prev
