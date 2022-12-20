@@ -33,25 +33,28 @@ for l in f:
     i, o, c, ob, obc, gore, gobs = tuple(ints(l))
     bps.append(Blueprint(i, o, c, ob, obc, gore, gobs))
 
-
 @functools.lru_cache(maxsize=None)
 def solve(part=1):
     scores = []
     maxIndex = len(bps) if part == 1 else 3
     startTime = 24 if part == 1 else 32
     for bp in bps[:maxIndex]:
-        state = (startTime, 0, 0, 0, 0, 1, 0, 0, 0)
+        state = (startTime, 0, 0, 0, 0, 1, 0, 0, 0,0)
         q = deque([state])
         maxOreSpend = max(bp.ore, bp.clay, bp.obore, bp.gore)
         maxClay = bp.obclay
         best = 0
         s = set()
+        tq = time.time()
         while q:
             curr = q.popleft()
-            (t, o, c, obs, g, obot, cbot, obsbot, gbot) = curr
+            (t, o, c, obs, g, obot, cbot, obsbot, gbot,forbidden) = curr
             if t == 0:
                 best = max(g, best)
                 continue
+            if g + gbot * t + ((t-1) * t) // 2 <= best:
+                continue
+
             obot = min(maxOreSpend, obot)
             cbot = min(maxClay, cbot)
             obsbot = min(bp.gobs, obsbot)
@@ -59,25 +62,32 @@ def solve(part=1):
             c = min(c, t * maxClay - cbot * (t - 1))
             obs = min(obs, t * bp.gobs - obsbot * (t - 1))
 
+            # orebot, claybot, obsidianbot 3 bits
             if (t, o, c, obs, g, obot, cbot, obsbot, gbot) in s:
                 continue
             s.add((t, o, c, obs, g, obot, cbot, obsbot, gbot))
-            # building a geode bot has to be best right?
+            # building a geode bot has to be best right? turns out sometimes no but that's rare
             if o >= bp.gore and obs >= bp.gobs:
                 q.append((t - 1, o + obot - bp.gore, c + cbot, obs + obsbot - bp.gobs, g + gbot, obot, cbot, obsbot,
-                          gbot + 1))
+                          gbot + 1, 0))
             else:
-                # do nothing
-                q.append((t - 1, o + obot, c + cbot, obs + obsbot, g + gbot, obot, cbot, obsbot, gbot))
-                if o >= bp.obore and c >= bp.obclay:
+
+                if o >= bp.obore and c >= bp.obclay and (forbidden & 1) == 0:
                     q.append((t - 1, o + obot - bp.obore, c + cbot - bp.obclay, obs + obsbot, g + gbot, obot, cbot,
-                              obsbot + 1, gbot))
-                if o >= bp.clay:
+                              obsbot + 1, gbot, 0))
+                    forbidden = forbidden | 1
+                if o >= bp.clay and (forbidden & 2) == 0:
                     q.append(
-                        (t - 1, o + obot - bp.clay, c + cbot, obs + obsbot, g + gbot, obot, cbot + 1, obsbot, gbot))
-                if o >= bp.ore:
-                    q.append((t - 1, o + obot - bp.ore, c + cbot, obs + obsbot, g + gbot, obot + 1, cbot, obsbot, gbot))
+                        (t - 1, o + obot - bp.clay, c + cbot, obs + obsbot, g + gbot, obot, cbot + 1, obsbot, gbot, 0))
+                    forbidden = forbidden | 2
+                if o >= bp.ore and (forbidden & 4) == 0:
+                    q.append((t - 1, o + obot - bp.ore, c + cbot, obs + obsbot, g + gbot, obot + 1, cbot, obsbot, gbot, 0))
+                    forbidden = forbidden | 4
+                # do nothing
+                q.append((t - 1, o + obot, c + cbot, obs + obsbot, g + gbot, obot, cbot, obsbot, gbot, forbidden))
         scores.append(best * bp.id if part == 1 else best)
+        tw = time.time()
+        print("part:", part, " blueprint: \t", bp.id, " time taken: \t", tw - tq)
     if part == 1:
         return sum(scores)
     p = 1
